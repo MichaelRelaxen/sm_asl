@@ -157,9 +157,9 @@ start {
 }
 
 reset {
-	if (vars.currentPlanet.Current == 0) {
+/*	if (vars.currentPlanet.Current == 0) {
 		return true;
-	}
+	} */
 	if (settings["AutoReset"]) {
 		if (vars.currentPlanet.Current ==  1)
 	{
