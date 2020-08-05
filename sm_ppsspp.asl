@@ -9,7 +9,11 @@ startup {
 		settings.Add("SplitOtto", true, "Split on Otto entry");
 		settings.SetToolTip("SplitOtto", "Toggle this to make the autosplitter split on entering Otto.");
 		settings.Add("ChallaxSplit", true, "Split on Challax");
-		settings.SetToolTip("ChallaxSplit", "Toggle this to make the autosplitter on entering Challax");
+		settings.SetToolTip("ChallaxSplit", "Toggle this to make the autosplitter split on entering Challax");
+		settings.Add("IClankSplit", true, "Split after Inside Clank");
+		settings.SetToolTip("IClankSplit", "Toggle this to make the autosplitter split on leaving Inside Clank");
+		settings.Add("QuodronaSplit", true, "Split on Quodrona");
+		settings.SetToolTip("QuodronaSplit", "Toggle this to make the autosplitter split on entering Quodrona");
 }
 
 
@@ -51,6 +55,9 @@ split {
 		return vars.currentPlanet.Current != vars.currentPlanet.Old;
 } 
 
+
+
+Todo: Add custom settings for planets like Remains etc
 Offset - 0x190
 	Main Menu 0x00
 	Pokitaru 0x01
@@ -102,9 +109,17 @@ split {
 		return true;
 		//Inside clank from Dayni
 	}
-	if (vars.currentPlanet.Current == 10 && vars.currentPlanet.Current != vars.currentPlanet.Old) {
-		return true;
-		//Quodrona from Dayni ship
+	if (settings["IClankSplit"]) {
+		if (vars.currentPlanet.Current == 8 && vars.currentPlanet.Old == 9) {
+			return true;
+		}
+	}
+	if (settings["QuodronaSplit"]) {
+		
+		if (vars.currentPlanet.Current == 10 && vars.currentPlanet.Current != vars.currentPlanet.Old) {
+			return true;
+		//Quodrona from anywhere
+		}
 	}
 	if (settings["RemainsSplit"]) {
 		if (vars.currentPlanet.Current == 23 && vars.currentPlanet.Current != vars.currentPlanet.Old) {
@@ -126,12 +141,6 @@ split {
 				return true;
 		//Otto split
 			}
-		}
-	}
-	if (vars.currentPlanet.Current == 10) {
-		if (vars.ottoDeath.Current == 1 && vars.ottoDeath.Old == 0) {
-			return true;
-		// Otto death
 		}
 	}
 	
