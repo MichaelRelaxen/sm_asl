@@ -25,11 +25,13 @@ init {
 	vars.currentPlanet = new MemoryWatcher<int>(ptr + 0x54254);
 	vars.dreamtimeCheck = new MemoryWatcher<int>(ptr+ 0x54264);
 	vars.pokiSpawn = new MemoryWatcher<int>(ptr + 0xC7A6F0);
+	vars.planetLoading = new MemoryWatcher<byte>(ptr + 0x100);
 	
 	vars.watchers = new MemoryWatcherList() {
 		vars.currentPlanet,
 		vars.dreamtimeCheck,
-		vars.pokiSpawn
+		vars.pokiSpawn,
+		vars.planetLoading
 	};
 }
 
@@ -41,13 +43,19 @@ update {
 split {
 	if (vars.currentPlanet.Current != vars.currentPlanet.Old) {
 		return true;
-		// Does not work with Dreamtime, is it even the address for planet ID?
+		// Does not work with Dreamtime, is it even the address for planet ID? 
 	}
-	if (vars.dreamtimeCheck.Current != vars.dreamtimeCheck.Old) {
+	else if (vars.dreamtimeCheck.Current != vars.dreamtimeCheck.Old) {
 		return true;
-		// This is probably not a good idea.
+		// THIS IS NOT A GOOD IDEA LOL
+	}
+	else if (vars.planetLoading.Current == 1 && vars.planetLoading.Old == 0) {
+		return true;
+		//THIS IS EVEN WORSE oh NO
 	}
 }
+
+		
 
 start {
 	return vars.pokiSpawn.Current == 1 && vars.pokiSpawn.Old == 0;
