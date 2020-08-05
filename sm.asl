@@ -51,9 +51,6 @@ split {
 		return vars.currentPlanet.Current != vars.currentPlanet.Old;
 } 
 
-
-
-Todo: Add custom settings for planets like Remains etc
 Offset - 0x190
 	Main Menu 0x00
 	Pokitaru 0x01
@@ -140,11 +137,6 @@ split {
 	
 }
 	
-	
-	
-	
-
-		
 
 start {
 	if (vars.currentPlanet.Current ==  1)
