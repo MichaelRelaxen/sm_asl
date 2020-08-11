@@ -5,17 +5,11 @@ startup {
 		vars.scanTarget = new SigScanTarget (0, "48 45 52 4F 53 4B 49 4E 5F 49 6E 69 74 53 69 6E 67 6C 65 50 6C 61 79 65 72");
 		
 		settings.Add("RemainsSplit", true, "Split on Remains");
-		settings.SetToolTip("RemainsSplit", "Toggle this to make the autosplitter split on entering MOO Remains.");
 		settings.Add("SplitOtto", true, "Split on Otto entry");
-		settings.SetToolTip("SplitOtto", "Toggle this to make the autosplitter split on entering Otto.");
 		settings.Add("ChallaxSplit", true, "Split on Challax");
-		settings.SetToolTip("ChallaxSplit", "Toggle this to make the autosplitter split on entering Challax");
 		settings.Add("IClankSplit", true, "Split after Inside Clank");
-		settings.SetToolTip("IClankSplit", "Toggle this to make the autosplitter split on leaving Inside Clank");
 		settings.Add("QuodronaSplit", true, "Split on Quodrona");
-		settings.SetToolTip("QuodronaSplit", "Toggle this to make the autosplitter split on entering Quodrona");
 		settings.Add("AutoReset", true, "Toggle this to auto-reset (NG+)");
-		settings.SetToolTip("AutoReset", "Toggle to automatically reset on poki load, intended for NG+ runs");
 }
 
 
@@ -38,13 +32,13 @@ init {
 	vars.currentPlanet = new MemoryWatcher<int>(ptr + 0x190);
 	vars.pokiSpawn = new MemoryWatcher<int>(ptr + 0xC7A6F0);
 	vars.ottoEntry = new MemoryWatcher<float>(ptr + 0xBAB4F8);
-	vars.ottoDeath = new MemoryWatcher<byte>(ptr + 0x8005C);
+	vars.currentCutscene = new MemoryWatcher<int>(ptr + 0x178CC1D);
 	
 	vars.watchers = new MemoryWatcherList() {
 		vars.currentPlanet,
 		vars.pokiSpawn,
 		vars.ottoEntry,
-		vars.ottoDeath
+		vars.currentCutscene
 	};
 }
 
@@ -145,7 +139,10 @@ split {
 			}
 		}
 	}
-	
+	if (vars.currentCutscene.Current == 776417329 && vars.currentCutscene.Current != vars.currentCutscene.Old) {
+		return true;
+	}
+	// end split, this fucking sucks
 }
 	
 
