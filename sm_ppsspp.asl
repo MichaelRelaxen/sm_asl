@@ -97,7 +97,6 @@ split {
 		if (vars.currentPlanet.Current == 10) {
 			if (vars.ottoEntry.Current == 5000 && vars.ottoEntry.Old <= 0) {
 				return true;
-		//Otto split
 			}
 		}
 	}
